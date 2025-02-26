@@ -1,10 +1,9 @@
-@model IEnumerable<Task>
-namespace Mission08_Team0304.Models
-
+using Mission08_Team0304.Models  
+@model IEnumerable<Mission08_Team0304.Models.Task>
 
 @{
     ViewData["Title"] = "Quadrants View";
-    Layout = "_Layout";  
+    Layout = "_Layout";
 }
 
 <!-- CSS for custom styling (optional, can be in a separate file) -->
@@ -22,11 +21,11 @@ namespace Mission08_Team0304.Models
     }
 </style>
 
-<!-- JavaScript for interactivity (at the bottom to ensure DOM is loaded) -->
+<!-- JavaScript for interactivity -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function updateTask(taskId) {
-        window.location.href = `/Tasks/Edit/${taskId}`;  // Navigate to edit view (adjust route as needed)
+        window.location.href = `/Tasks/Edit/${taskId}`;  // Adjust route as needed
     }
 
     function deleteTask(taskId) {
@@ -35,7 +34,7 @@ namespace Mission08_Team0304.Models
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // For ASP.NET Core anti-forgery
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                 }
             })
             .then(response => {
@@ -54,7 +53,7 @@ namespace Mission08_Team0304.Models
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // For ASP.NET Core anti-forgery
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
             }
         })
         .then(response => {
@@ -71,7 +70,7 @@ namespace Mission08_Team0304.Models
 <div class="container mt-4">
     <h2>Quadrants View</h2>
 
-    <!-- Navigation (optional, could be in Shared Layout, but included here for completeness) -->
+    <!-- Navigation (optional, could be in Shared Layout) -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,17 +97,17 @@ namespace Mission08_Team0304.Models
                     Quadrant I: Important / Urgent
                 </div>
                 <div class="card-body">
-                    @if (Model.Any(t => t.Quadrant == 1 && !t.Completed))
+                    @if (Model.Any(t => t.Quadrant == 1 && (!t.Completed.HasValue || !t.Completed.Value)))
                     {
                         <ul class="list-group">
-                            @foreach (var task in Model.Where(t => t.Quadrant == 1 && !t.Completed))
+                            @foreach (var task in Model.Where(t => t.Quadrant == 1 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @(string.IsNullOrEmpty(task.Category) ? "No category" : task.Category))
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
@@ -129,17 +128,17 @@ namespace Mission08_Team0304.Models
                     Quadrant II: Important / Not Urgent
                 </div>
                 <div class="card-body">
-                    @if (Model.Any(t => t.Quadrant == 2 && !t.Completed))
+                    @if (Model.Any(t => t.Quadrant == 2 && (!t.Completed.HasValue || !t.Completed.Value)))
                     {
                         <ul class="list-group">
-                            @foreach (var task in Model.Where(t => t.Quadrant == 2 && !t.Completed))
+                            @foreach (var task in Model.Where(t => t.Quadrant == 2 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @(string.IsNullOrEmpty(task.Category) ? "No category" : task.Category))
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
@@ -160,17 +159,17 @@ namespace Mission08_Team0304.Models
                     Quadrant III: Not Important / Urgent
                 </div>
                 <div class="card-body">
-                    @if (Model.Any(t => t.Quadrant == 3 && !t.Completed))
+                    @if (Model.Any(t => t.Quadrant == 3 && (!t.Completed.HasValue || !t.Completed.Value)))
                     {
                         <ul class="list-group">
-                            @foreach (var task in Model.Where(t => t.Quadrant == 3 && !t.Completed))
+                            @foreach (var task in Model.Where(t => t.Quadrant == 3 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @(string.IsNullOrEmpty(task.Category) ? "No category" : task.Category))
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
@@ -191,17 +190,17 @@ namespace Mission08_Team0304.Models
                     Quadrant IV: Not Important / Not Urgent
                 </div>
                 <div class="card-body">
-                    @if (Model.Any(t => t.Quadrant == 4 && !t.Completed))
+                    @if (Model.Any(t => t.Quadrant == 4 && (!t.Completed.HasValue || !t.Completed.Value)))
                     {
                         <ul class="list-group">
-                            @foreach (var task in Model.Where(t => t.Quadrant == 4 && !t.Completed))
+                            @foreach (var task in Model.Where(t => t.Quadrant == 4 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @(string.IsNullOrEmpty(task.Category) ? "No category" : task.Category))
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
