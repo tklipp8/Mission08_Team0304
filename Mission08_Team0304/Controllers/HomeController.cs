@@ -16,10 +16,10 @@ public class HomeController : Controller
         _context = taskTemp;
     }
 
-    //viewing the quadrant page
     [HttpGet]
     public IActionResult Index()
     {
+
         var temp = _context.Tasks
             .Include(x => x.CategoryName).ToList(); //pulls List of tasks
         
