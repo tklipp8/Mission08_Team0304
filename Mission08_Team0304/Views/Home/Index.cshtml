@@ -71,7 +71,9 @@ using Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 1 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
+
                                     <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @task.CategoryName ? "No category" : task.CategoryName))
+
                                     <div class="float-end">
                                         <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
                                         <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
@@ -102,7 +104,9 @@ using Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 2 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
+
                                     <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @task.CategoryName ? "No category" : task.CategoryName))
+
                                     <div class="float-end">
                                         <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
                                         <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
@@ -133,7 +137,9 @@ using Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 3 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
+
                                     <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @task.CategoryName ? "No category" : task.CategoryName))
+
                                     <div class="float-end">
                                         <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
                                         <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
@@ -164,7 +170,9 @@ using Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 4 && (!t.Completed.HasValue || !t.Completed.Value)))
                             {
                                 <li class="list-group-item">
+                                  
                                     <strong>@task.TaskName</strong> - Due: @(string.IsNullOrEmpty(task.DueDate) ? "No due date" : task.DueDate) (Category: @task.CategoryName ? "No category" : task.CategoryName))
+
                                     <div class="float-end">
                                         <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
                                         <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>

@@ -19,8 +19,12 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var temp = _context.Tasks.Include(x => x.CategoryName).ToList(); // Pulls List of Tasks with Category
+
+        var temp = _context.Tasks
+            .Include(x => x.CategoryName).ToList(); //pulls List of tasks
+        
         return View(temp);
+        
     }
 
     //adding a task
