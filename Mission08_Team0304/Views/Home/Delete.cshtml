@@ -41,7 +41,7 @@
                 </dd>
 
                 <dt class="col-sm-3">Category</dt>
-                <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.Category) ? "No category" : Model.Category)</dd>
+                <dd class="col-sm-9">@Model.CategoryName  ? "No category" : Model.Category)</dd>
 
                 <dt class="col-sm-3">Completed</dt>
                 <dd class="col-sm-9">@(Model.Completed.HasValue && Model.Completed.Value ? "Yes" : "No")</dd>
