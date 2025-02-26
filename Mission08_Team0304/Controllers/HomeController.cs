@@ -18,7 +18,7 @@ public class HomeController : Controller
 
     //viewing the quadrant page
     [HttpGet]
-    public IActionResult Quadrants()
+    public IActionResult Index()
     {
         var temp = _context.Tasks
             .Include((x => x.Category))
@@ -47,7 +47,7 @@ public class HomeController : Controller
             _context.Tasks.Add(response); 
             _context.SaveChanges(); 
             
-            return View("Quadrants");
+            return View("Index");
         }
         else
         {
@@ -79,7 +79,7 @@ public class HomeController : Controller
         _context.Update(updatedInfo);
         _context.SaveChanges();
 
-        return RedirectToAction("Quadrants");
+        return RedirectToAction("Index");
     }
 
     //pulls up confirmation page to delete the record
@@ -99,6 +99,6 @@ public class HomeController : Controller
         _context.Tasks.Remove(deletingInfo);
         _context.SaveChanges();
 
-        return RedirectToAction("Quadrants");
+        return RedirectToAction("Index");
     }
 }
