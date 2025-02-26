@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission08_Team0304.Models;
+using Task = Mission08_Team0304.Models.Task;
 
 namespace Mission08_Team0304.Controllers;
 
@@ -17,33 +19,41 @@ public class HomeController : Controller
     //viewing the quadrant page
     [HttpGet]
     public IActionResult Quadrants()
-
     {
-        var temp = _context.Tasks.ToList(); //pulls List of tasks
+        var temp = _context.Tasks
+            .Include((x => x.Category))
+            .ToList();; //pulls List of tasks
         return View(temp);
     }
 
     //adding a task
     [HttpGet]
-    public IActionResult AddATask()
+    public IActionResult Add()
     {
-        return View("AddATask", new Task());
+        ViewBag.Categories = _context.Categories
+            .OrderBy(x => x.CategoryName)
+            .ToList();
+        
+        return View("Add", new Task());
     }
     
     //Saves valid new task instances to the database (if invalid, gives errors for correction)
     [HttpPost]
-    public IActionResult AddATask(Task response)
+    public IActionResult Add(Task response)
     {
         if (ModelState.IsValid)
         {
             _context.Tasks.Add(response); 
             _context.SaveChanges(); 
             
-            return View("Confirmation", response);
+            return View("Quadrants");
         }
         else
         {
-            return View("AddATask", response);
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList();
+            return View("Add", response);
         }
     }
     
@@ -54,7 +64,11 @@ public class HomeController : Controller
         var recordToEdit = _context.Tasks
             .Single(x => x.TaskId == id);
         
-        return View("AddATask", recordToEdit);
+        ViewBag.Categories = _context.Categories
+            .OrderBy(x => x.CategoryName)
+            .ToList();
+        
+        return View("Add", recordToEdit);
     }
     
     //submits edited information back into the database
@@ -64,7 +78,7 @@ public class HomeController : Controller
         _context.Update(updatedInfo);
         _context.SaveChanges();
         
-        return RedirectToAction("ViewQuadrants");
+        return RedirectToAction("Quadrants");
     }
     
     //pulls up confirmation page to delete the record
@@ -84,7 +98,7 @@ public class HomeController : Controller
         _context.Tasks.Remove(deletingInfo);
         _context.SaveChanges();
 
-        return RedirectToAction("ViewQuadrants");
+        return RedirectToAction("Quadrants");
     }
 }
 

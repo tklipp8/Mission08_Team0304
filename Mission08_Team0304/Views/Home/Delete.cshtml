@@ -1,5 +1,5 @@
 @model TModel
-@model Task 
+@model Mission08_Team0304.Models.Task 
 
 @{
     ViewData["Title"] = "Delete Task";
@@ -13,7 +13,7 @@
         <div class="card-body">
             <dl class="row">
                 <dt class="col-sm-3">Task</dt>
-                <dd class="col-sm-9">@Model.Task</dd>
+                <dd class="col-sm-9">@Model.TaskName</dd>
 
                 <dt class="col-sm-3">Due Date</dt>
                 <dd class="col-sm-9">@Model.DueDate.ToShortDateString()</dd>
@@ -49,7 +49,7 @@
         </div>
     </div>
     <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="Id" />  <!-- Hidden field for the task ID -->
+        <input type="hidden" asp-for="TaskId" />  <!-- Hidden field for the task ID -->
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-action="Quadrants" class="btn btn-secondary">Back to Quadrants</a>
     </form>
