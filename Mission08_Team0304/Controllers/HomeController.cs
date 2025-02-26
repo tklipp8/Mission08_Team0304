@@ -17,11 +17,12 @@ public class HomeController : Controller
     //viewing the quadrant page
     [HttpGet]
     public IActionResult Quadrants()
+
     {
         var temp = _context.Tasks.ToList(); //pulls List of tasks
         return View(temp);
     }
-    
+
     //adding a task
     [HttpGet]
     public IActionResult AddATask()
