@@ -3,6 +3,7 @@
 <h1>Edit Task</h1>
 
 <form method="post">
+    @* Hidden input for task id to allow you to edit a specific task *@
     <input asp-for="TaskId" type="hidden" />
 
     <label asp-for="Task">Task:</label>
