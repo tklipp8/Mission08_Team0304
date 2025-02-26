@@ -1,4 +1,4 @@
-@model IEnumerable<Task>
+@model IEnumerable<Mission08_Team0304.Models.Task>
 namespace Mission08_Team0304.Models
 
 
@@ -104,11 +104,11 @@ namespace Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 1 && !t.Completed))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
@@ -135,11 +135,11 @@ namespace Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 2 && !t.Completed))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
@@ -166,11 +166,11 @@ namespace Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 3 && !t.Completed))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }
@@ -197,11 +197,11 @@ namespace Mission08_Team0304.Models
                             @foreach (var task in Model.Where(t => t.Quadrant == 4 && !t.Completed))
                             {
                                 <li class="list-group-item">
-                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <strong>@task.TaskName</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
                                     <div class="float-end">
-                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
-                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
-                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.TaskId)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.TaskId)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.TaskId)">Mark Complete</button>
                                     </div>
                                 </li>
                             }

@@ -1,4 +1,4 @@
-﻿@model Task
+﻿@model Mission08_Team0304.Models.Task
 
 <h1>Add Task</h1>
 
@@ -7,8 +7,8 @@
     @* Hidden input for task id so it gets automatically assigned *@
     <input asp-for="TaskId" type="hidden" />
 
-    <label asp-for="Task">Task:</label>
-    <input asp-for="Task" />
+    <label asp-for="TaskName">Task:</label>
+    <input asp-for="TaskName" />
     <br />
 
     <label asp-for="DueDate">Due Date:</label>
