@@ -1,0 +1,37 @@
+﻿@model Task
+
+<h1>Edit Task</h1>
+
+<form method="post">
+    @* Hidden input for task id to allow you to edit a specific task *@
+    <input asp-for="TaskId" type="hidden" />
+
+    <label asp-for="Task">Task:</label>
+    <input asp-for="Task" />
+    <br />
+
+    <label asp-for="DueDate">Due Date:</label>
+    <input asp-for="DueDate" />
+    <br />
+
+    <label asp-for="Quadrant">Quadrant:</label>
+    <input asp-for="Quadrant" />
+    <br />
+
+    <label asp-for="Category">Category:</label>
+    <select asp-for="Category">
+        <option value="Home">Home</option>
+        <option value="Work">Work</option>
+        <option value="School">School</option>
+        <option value="Church">Church</option>
+    </select>
+    <br />
+
+    <label asp-for="Completed">Completed:</label>
+    <select asp-for="Completed">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+
+    <button>Submit</button>
+</form>
