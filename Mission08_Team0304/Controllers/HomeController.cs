@@ -16,7 +16,7 @@ public class HomeController : Controller
     
     //viewing the quadrant page
     [HttpGet]
-    public IActionResult ViewQuadrants()
+    public IActionResult Quadrants()
     {
         var temp = _context.Tasks.ToList(); //pulls List of tasks
         return View(temp);
