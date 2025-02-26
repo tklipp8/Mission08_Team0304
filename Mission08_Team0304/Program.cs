@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<TasksContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:TaskConnection"]);
+    options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 
 var app = builder.Build();
