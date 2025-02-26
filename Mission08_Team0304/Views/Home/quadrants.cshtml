@@ -1,0 +1,218 @@
+@model IEnumerable<Task>
+namespace Mission08_Team0304.Models
+
+
+@{
+    ViewData["Title"] = "Quadrants View";
+    Layout = "_Layout";  
+}
+
+<!-- CSS for custom styling (optional, can be in a separate file) -->
+<style>
+    .card {
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card-header {
+        font-weight: bold;
+    }
+    .empty-quadrant {
+        color: #888;
+        font-style: italic;
+    }
+</style>
+
+<!-- JavaScript for interactivity (at the bottom to ensure DOM is loaded) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function updateTask(taskId) {
+        window.location.href = `/Tasks/Edit/${taskId}`;  // Navigate to edit view (adjust route as needed)
+    }
+
+    function deleteTask(taskId) {
+        if (confirm('Are you sure you want to delete this task?')) {
+            fetch(`/Tasks/Delete/${taskId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // For ASP.NET Core anti-forgery
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();  // Refresh the page after delete
+                } else {
+                    alert('Error deleting task. Please try again.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function markComplete(taskId) {
+        fetch(`/Tasks/MarkComplete/${taskId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // For ASP.NET Core anti-forgery
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();  // Refresh the page after marking complete
+            } else {
+                alert('Error marking task as complete. Please try again.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+<div class="container mt-4">
+    <h2>Quadrants View</h2>
+
+    <!-- Navigation (optional, could be in Shared Layout, but included here for completeness) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Tasks/Quadrants">Quadrants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Tasks/Add">Add Task</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <!-- Quadrant I: Important / Urgent -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    Quadrant I: Important / Urgent
+                </div>
+                <div class="card-body">
+                    @if (Model.Any(t => t.Quadrant == 1 && !t.Completed))
+                    {
+                        <ul class="list-group">
+                            @foreach (var task in Model.Where(t => t.Quadrant == 1 && !t.Completed))
+                            {
+                                <li class="list-group-item">
+                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <div class="float-end">
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="empty-quadrant">No tasks in this quadrant.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant II: Important / Not Urgent -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    Quadrant II: Important / Not Urgent
+                </div>
+                <div class="card-body">
+                    @if (Model.Any(t => t.Quadrant == 2 && !t.Completed))
+                    {
+                        <ul class="list-group">
+                            @foreach (var task in Model.Where(t => t.Quadrant == 2 && !t.Completed))
+                            {
+                                <li class="list-group-item">
+                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <div class="float-end">
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="empty-quadrant">No tasks in this quadrant.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant III: Not Important / Urgent -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-warning text-white">
+                    Quadrant III: Not Important / Urgent
+                </div>
+                <div class="card-body">
+                    @if (Model.Any(t => t.Quadrant == 3 && !t.Completed))
+                    {
+                        <ul class="list-group">
+                            @foreach (var task in Model.Where(t => t.Quadrant == 3 && !t.Completed))
+                            {
+                                <li class="list-group-item">
+                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <div class="float-end">
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="empty-quadrant">No tasks in this quadrant.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant IV: Not Important / Not Urgent -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-danger text-white">
+                    Quadrant IV: Not Important / Not Urgent
+                </div>
+                <div class="card-body">
+                    @if (Model.Any(t => t.Quadrant == 4 && !t.Completed))
+                    {
+                        <ul class="list-group">
+                            @foreach (var task in Model.Where(t => t.Quadrant == 4 && !t.Completed))
+                            {
+                                <li class="list-group-item">
+                                    <strong>@task.Task</strong> - Due: @task.DueDate.ToShortDateString() (Category: @task.Category)
+                                    <div class="float-end">
+                                        <button class="btn btn-sm btn-primary me-2" onclick="updateTask(@task.Id)">Update</button>
+                                        <button class="btn btn-sm btn-danger me-2" onclick="deleteTask(@task.Id)">Delete</button>
+                                        <button class="btn btn-sm btn-success" onclick="markComplete(@task.Id)">Mark Complete</button>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="empty-quadrant">No tasks in this quadrant.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
