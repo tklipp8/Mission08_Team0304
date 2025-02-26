@@ -21,7 +21,7 @@
 
     @* Dropdown for category options *@
     <label asp-for="Category">Category:</label>
-    <select asp-for="CategoryId">
+    <select asp-for="Category">
         @foreach (Category m in ViewBag.Categories)
         {
             <option value="@m.CategoryId">@m.CategoryName</option>
