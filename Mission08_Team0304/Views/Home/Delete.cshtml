@@ -1,68 +1,15 @@
-using Mission08_Team0304.Models
-@model Mission08_Team0304.Models.Task
-
 @{
     ViewData["Title"] = "Delete Task";
     Layout = "_Layout";
 }
 
-<div class="container mt-4">
-    <h2>Delete Task</h2>
-    <h3>Are you sure you want to delete this task?</h3>
-    <div class="card mb-3">
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Task</dt>
-                <dd class="col-sm-9">@Model.TaskName</dd>
+@model Mission08_Team0304.Models.Task
 
-                <dt class="col-sm-3">Due Date</dt>
-                <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.DueDate) ? "No due date" : Model.DueDate)</dd>
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete <strong>@Model.TaskName</strong>?</p>
 
-                <dt class="col-sm-3">Quadrant</dt>
-                <dd class="col-sm-9">
-                    @switch (Model.Quadrant)
-                    {
-                        case 1:
-                            <span>Important / Urgent</span>
-                            break;
-                        case 2:
-                            <span>Important / Not Urgent</span>
-                            break;
-                        case 3:
-                            <span>Not Important / Urgent</span>
-                            break;
-                        case 4:
-                            <span>Not Important / Not Urgent</span>
-                            break;
-                        default:
-                            <span>Unknown Quadrant</span>
-                            break;
-                    }
-                </dd>
-
-                <dt class="col-sm-3">Category</dt>
-
-                <dd class="col-sm-9">@Model.CategoryName  ? "No category" : Model.Category)</dd>
-
-                <dt class="col-sm-3">Completed</dt>
-                <dd class="col-sm-9">@(Model.Completed.HasValue && Model.Completed.Value ? "Yes" : "No")</dd>
-            </dl>
-        </div>
-    </div>
-    <form asp-action="Delete" method="post" onsubmit="return confirmDelete()">
-        <input type="hidden" asp-for="TaskId" />
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a asp-action="Index" class="btn btn-secondary">Back to Index</a>
-    </form>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script src="~/lib/jquery/jquery-3.6.0.min.js"></script>  <!-- Local jQuery -->
-    <script>
-        function confirmDelete() {
-            return confirm('Are you sure you want to delete this task?');
-        }
-    </script>
-}
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="TaskId" />
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

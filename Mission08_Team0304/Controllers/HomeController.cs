@@ -42,13 +42,15 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Add(Task response)
     {
-        if (ModelState.IsValid)
+        if (ModelState.IsValid) 
         {
 
             _context.Tasks.Add(response); 
-            _context.SaveChanges(); 
-            
-            return View("Index");
+            _context.SaveChanges();
+            var temp = _context.Tasks
+                .Include(x => x.CategoryName).ToList(); //pulls List of tasks
+
+            return View("Index", temp);
         }
         else
         {
@@ -87,19 +89,15 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var recordToDelete = _context.Tasks
-            .Single(x => x.TaskId == id);
-
-        return View("Delete", recordToDelete);
+        var record = _context.Tasks.Single(x => x.TaskId == id);
+        return View(record);
     }
 
-    //deletes the entry
     [HttpPost]
-    public IActionResult Delete(Task deletingInfo)
+    public IActionResult Delete(Task app)
     {
-        _context.Tasks.Remove(deletingInfo);
+        _context.Tasks.Remove(app);
         _context.SaveChanges();
-
         return RedirectToAction("Index");
     }
 }
