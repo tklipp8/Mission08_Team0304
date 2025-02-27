@@ -5,24 +5,60 @@
     Layout = "_Layout";
 }
 
-<h2>Task Manager</h2>
+<h2 class="text-center my-4">Task Manager</h2>
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-    @for (int q = 1; q <= 4; q++)
-    {
-        var tasks = Model.Where(t => t.Quadrant == q && t.Completed == false).ToList();
-        <div>
-            <h3>Quadrant @q</h3>
-            <ul>
-                @foreach (var task in tasks)
-                {
-                    <li>
-                        @task.TaskName (@task.CategoryName?.CategoryName)
-                        <a asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@task.TaskId" class="btn btn-danger btn-sm">Delete</a>
-                    </li>
-                }
-            </ul>
-        </div>
-    }
+<div class="container">
+    <div class="row d-flex">
+        @for (int q = 1; q <= 4; q++)
+        {
+            var tasks = Model.Where(t => t.Quadrant == q && t.Completed == false).ToList();
+            
+            // Set the quadrant title based on the quadrant number
+            string quadrantTitle = "";
+            if (q == 1)
+                quadrantTitle = "Quadrant 1: <small style='font-weight: normal;'>(Urgent and Important)</small>";
+            else if (q == 2)
+                quadrantTitle = "Quadrant 2: <small style='font-weight: normal;'>(Important but Not Urgent)</small>";
+            else if (q == 3)
+                quadrantTitle = "Quadrant 3: <small style='font-weight: normal;'>(Urgent but Not Important)</small>";
+            else if (q == 4)
+                quadrantTitle = "Quadrant 4: <small style='font-weight: normal;'>(Neither Urgent nor Important)</small>";
+
+            <div class="col-md-6 mb-4 d-flex">
+                <div class="card shadow-sm flex-fill">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">@Html.Raw(quadrantTitle)</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (tasks.Any())
+                        {
+                            <ul class="list-group">
+                                @foreach (var task in tasks)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>@task.TaskName</strong>
+                                            <small class="text-muted">(@task.CategoryName?.CategoryName)</small>
+                                        </div>
+                                        <div class="btn-group">
+                                            <form asp-action="Complete" asp-controller="Home" method="post">
+                                                <input type="hidden" name="id" value="@task.TaskId" />
+                                                <button type="submit" class="btn btn-success btn-sm">✔</button>
+                                            </form>
+                                            <a asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-warning btn-sm">✏</a>
+                                            <a asp-action="Delete" asp-route-id="@task.TaskId" class="btn btn-danger btn-sm">🗑</a>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No tasks in this quadrant.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

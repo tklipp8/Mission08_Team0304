@@ -1,41 +1,68 @@
 ﻿@model Mission08_Team0304.Models.Task
 
-<h1>Add Task</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center">Add Task</h4>
+                </div>
+                <div class="card-body">
+                    @* Form to add a task *@
+                    <form method="post">
+                        @* Hidden input for task id so it gets automatically assigned *@
+                        <input asp-for="TaskId" type="hidden"/>
 
-@* Form to add a task *@
-<form method="post">
-    @* Hidden input for task id so it gets automatically assigned *@
-    <input asp-for="TaskId" type="hidden" />
+                        <div class="mb-3">
+                            <label asp-for="TaskName" class="form-label">Task:</label>
+                            <input asp-for="TaskName" class="form-control" placeholder="Enter task name" required/>
+                        </div>
 
-    <label asp-for="TaskName">Task:</label>
-    <input asp-for="TaskName" />
-    <br />
+                        <div class="mb-3">
+                            <label asp-for="DueDate" class="form-label">Due Date:</label>
+                            <input asp-for="DueDate" type="date" class="form-control"/>
+                        </div>
 
-    <label asp-for="DueDate">Due Date:</label>
-    <input asp-for="DueDate" />
-    <br />
+                        <div class="mb-3">
+                            <label asp-for="Quadrant" class="form-label">Quadrant:</label>
+                            <select asp-for="Quadrant" class="form-select" required>
+                                <option value="" disabled selected>Select a Quadrant</option>
+                                <option value="1">1: Urgent and Important</option>
+                                <option value="2">2: Important but Not Urgent</option>
+                                <option value="3">3: Urgent but Not Important</option>
+                                <option value="4">4: Neither Urgent nor Important</option>
+                            </select>
+                        </div>
 
-    <label asp-for="Quadrant">Quadrant:</label>
-    <input asp-for="Quadrant" />
-    <br />
+                        @* Dropdown for category options *@
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Category:</label>
+                            <select asp-for="CategoryId" class="form-select">
+                                @foreach (Category m in ViewBag.Categories)
+                                {
+                                    <option value="@m.CategoryId">@m.CategoryName</option>
+                                }
+                            </select>
+                        </div>
 
-    @* Dropdown for category options *@
-    <label asp-for="CategoryId">Category:</label>
-    <select asp-for="CategoryId">
-        @foreach (Category m in ViewBag.Categories)
-        {
-            <option value="@m.CategoryId">@m.CategoryName</option>
-        }
-    </select>
-    <br />
+                        @* True/false dropdown for whether task is completed *@
+                        <div class="mb-3">
+                            <label asp-for="Completed" class="form-label">Completed:</label>
+                            <select asp-for="Completed" class="form-select">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </div>
 
-    @* True/false dropdown for whether task is completed *@
-    <label asp-for="Completed">Completed:</label>
-    <select asp-for="Completed">
-        <option value="false">No</option>
-        <option value="true">Yes</option>
-    </select>
+                        @* Submit to database *@
+                        <div class="text-center">
+                            <a asp-action="Index" class="btn btn-secondary px-4">Cancel</a>
+                            <button type="submit" class="btn btn-success px-4">✅ Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    @* Submit to database *@
-    <button>Submit</button>
-</form>

@@ -19,9 +19,10 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-
         var temp = _context.Tasks
-            .Include(x => x.CategoryName).ToList(); //pulls List of tasks
+            .Include(x => x.CategoryName)
+            .Where(x => x.Completed == false) // Only show incomplete tasks
+            .ToList();
         
         return View(temp);
         
@@ -47,10 +48,8 @@ public class HomeController : Controller
 
             _context.Tasks.Add(response); 
             _context.SaveChanges();
-            var temp = _context.Tasks
-                .Include(x => x.CategoryName).ToList(); //pulls List of tasks
 
-            return View("Index", temp);
+            return RedirectToAction("Index");
         }
         else
         {
@@ -100,4 +99,20 @@ public class HomeController : Controller
         _context.SaveChanges();
         return RedirectToAction("Index");
     }
+    
+    [HttpPost]
+    public IActionResult Complete(int id)
+    {
+        var recordToComplete =  _context.Tasks.Find(id);
+
+        if (recordToComplete != null)
+        {
+            recordToComplete.Completed = true;
+            _context.Update(recordToComplete);
+            _context.SaveChanges();
+        }
+
+        return RedirectToAction("Index");
+    }
+
 }
