@@ -38,7 +38,7 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
-            _repo.AddManager(response); // Use repository to add task
+            _repo.AddTask(response); // Use repository to add task
             var tasks = _repo.GetTasksWithCategory().ToList(); // Fetch updated list
             return View("Index", tasks);
         }
