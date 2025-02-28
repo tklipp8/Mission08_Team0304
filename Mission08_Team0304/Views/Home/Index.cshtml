@@ -9,8 +9,9 @@
 
 <div class="container">
     <div class="row d-flex">
-        @for (int q = 1; q <= 4; q++)
+        @for (int q = 1; q <= 4; q++) // Loops through quadrants 1 to 4
         {
+            // Filter tasks for the current quadrant that are not completed
             var tasks = Model.Where(t => t.Quadrant == q && t.Completed == false).ToList();
             
             // Set the quadrant title based on the quadrant number
@@ -30,22 +31,27 @@
                         <h5 class="mb-0">@Html.Raw(quadrantTitle)</h5>
                     </div>
                     <div class="card-body">
-                        @if (tasks.Any())
+                        @if (tasks.Any()) // Check if there are tasks to display
                         {
                             <ul class="list-group">
-                                @foreach (var task in tasks)
+                                @foreach (var task in tasks) // Iterate over tasks in the current quadrant
                                 {
+                                    // List item with flexbox for task details and buttons
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <div>
+                                            @*Bold tasks*@
                                             <strong>@task.TaskName</strong>
                                             <small class="text-muted">(@task.CategoryName?.CategoryName)</small>
                                         </div>
+                                        @*Button group for task actions*@
                                         <div class="btn-group">
                                             <form asp-action="Complete" asp-controller="Home" method="post">
                                                 <input type="hidden" name="id" value="@task.TaskId" />
                                                 <button type="submit" class="btn btn-success btn-sm">✔</button>
                                             </form>
+                                            @*Button for edit*@
                                             <a asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-warning btn-sm">✏</a>
+                                            @*Button for delete*@
                                             <a asp-action="Delete" asp-route-id="@task.TaskId" class="btn btn-danger btn-sm">🗑</a>
                                         </div>
                                     </li>
@@ -53,6 +59,7 @@
                             </ul>
                         }
                         else
+                            // placeholder message for when there is no tasks in a quadrant 
                         {
                             <p class="text-muted">No tasks in this quadrant.</p>
                         }
