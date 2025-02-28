@@ -8,96 +8,75 @@ namespace Mission08_Team0304.Controllers;
 
 public class HomeController : Controller
 {
-    private TasksContext _context;
+    private ITaskRepository _repo;
 
-    //constructor
-    public HomeController(TasksContext taskTemp) 
+    // Constructor
+    public HomeController(ITaskRepository temp)
     {
-        _context = taskTemp;
+        _repo = temp;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-
-        var temp = _context.Tasks
-            .Include(x => x.CategoryName).ToList(); //pulls List of tasks
-        
-        return View(temp);
-        
+        var tasks = _repo.GetTasksWithCategory().ToList(); // Fetch tasks with categories
+        return View(tasks);
     }
 
-    //adding a task
+    // Adding a task
     [HttpGet]
     public IActionResult Add()
     {
-        ViewBag.Categories = _context.Categories
-            .OrderBy(x => x.CategoryName)
-            .ToList();
-        
+        ViewBag.Categories = _repo.GetCategories(); // Fetch categories from repository
         return View("Add", new Task());
     }
 
-    //Saves valid new task instances to the database (if invalid, gives errors for correction)
+    // Saves valid new task instances to the database
     [HttpPost]
     public IActionResult Add(Task response)
     {
-        if (ModelState.IsValid) 
+        if (ModelState.IsValid)
         {
-
-            _context.Tasks.Add(response); 
-            _context.SaveChanges();
-            var temp = _context.Tasks
-                .Include(x => x.CategoryName).ToList(); //pulls List of tasks
-
-            return View("Index", temp);
+            _repo.AddManager(response); // Use repository to add task
+            var tasks = _repo.GetTasksWithCategory().ToList(); // Fetch updated list
+            return View("Index", tasks);
         }
         else
         {
-            ViewBag.Categories = _context.Categories
-                .OrderBy(x => x.CategoryName)
-                .ToList();
+            ViewBag.Categories = _repo.GetCategories(); // Fetch categories again
             return View("Add", response);
         }
     }
 
-    //pulls up page to edit based on a task chosen by the user
+    // Pulls up page to edit based on a task chosen by the user
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var recordToEdit = _context.Tasks
-            .Single(x => x.TaskId == id);
-            
-        ViewBag.Categories = _context.Categories
-            .OrderBy(x => x.CategoryName)
-            .ToList();
-        
+        var recordToEdit = _repo.GetTaskById(id); // Fetch task by ID
+        ViewBag.Categories = _repo.GetCategories(); // Fetch categories
         return View("Add", recordToEdit);
     }
 
-    //submits edited information back into the database
+    // Submits edited information back into the database
     [HttpPost]
     public IActionResult Edit(Task updatedInfo)
     {
-        _context.Update(updatedInfo);
-        _context.SaveChanges();
-
+        _repo.UpdateTask(updatedInfo); // Use repository to update task
         return RedirectToAction("Index");
     }
 
-    //pulls up confirmation page to delete the record
+    // Pulls up confirmation page to delete the record
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var record = _context.Tasks.Single(x => x.TaskId == id);
+        var record = _repo.GetTaskById(id); // Fetch task by ID
         return View(record);
     }
 
     [HttpPost]
     public IActionResult Delete(Task app)
     {
-        _context.Tasks.Remove(app);
-        _context.SaveChanges();
+        _repo.DeleteTask(app); // Use repository to delete task
         return RedirectToAction("Index");
     }
 }
