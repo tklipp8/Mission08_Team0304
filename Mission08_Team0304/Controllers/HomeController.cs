@@ -10,8 +10,8 @@ public class HomeController : Controller
 {
     private ITaskRepository _repo;
 
-    //constructor
-    public HomeController(ITaskRepository temp) 
+    // Constructor
+    public HomeController(ITaskRepository temp)
     {
         _repo = temp;
     }
@@ -19,87 +19,67 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var temp = _repo.Tasks
-            .Include(x => x.CategoryName)
-            .Where(x => x.Completed == false) // Only show incomplete tasks
-            .ToList();
-        
-        return View(temp);
-        
+        var tasks = _repo.GetTasksWithCategory().ToList(); // Fetch tasks with categories
+        return View(tasks);
     }
 
-    //adding a task
+    // Adding a task
     [HttpGet]
     public IActionResult Add()
     {
-        ViewBag.Categories = _repo.Categories
-            .OrderBy(x => x.CategoryName)
-            .ToList();
-        
+        ViewBag.Categories = _repo.GetCategories(); // Fetch categories from repository
         return View("Add", new Task());
     }
 
-    //Saves valid new task instances to the database (if invalid, gives errors for correction)
+    // Saves valid new task instances to the database
     [HttpPost]
     public IActionResult Add(Task response)
     {
-        if (ModelState.IsValid) 
+        if (ModelState.IsValid)
         {
-
-            _repo.Tasks.Add(response); 
-            _repo.SaveChanges();
-
-            return RedirectToAction("Index");
+            _repo.AddManager(response); // Use repository to add task
+            var tasks = _repo.GetTasksWithCategory().ToList(); // Fetch updated list
+            return View("Index", tasks);
         }
         else
         {
-            ViewBag.Categories = _repo.Categories
-                .OrderBy(x => x.CategoryName)
-                .ToList();
+            ViewBag.Categories = _repo.GetCategories(); // Fetch categories again
             return View("Add", response);
         }
     }
 
-    //pulls up page to edit based on a task chosen by the user
+    // Pulls up page to edit based on a task chosen by the user
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var recordToEdit = _repo.Tasks
-            .Single(x => x.TaskId == id);
-            
-        ViewBag.Categories = _repo.Categories
-            .OrderBy(x => x.CategoryName)
-            .ToList();
-        
+        var recordToEdit = _repo.GetTaskById(id); // Fetch task by ID
+        ViewBag.Categories = _repo.GetCategories(); // Fetch categories
         return View("Add", recordToEdit);
     }
 
-    //submits edited information back into the database
+    // Submits edited information back into the database
     [HttpPost]
     public IActionResult Edit(Task updatedInfo)
     {
-        _repo.Update(updatedInfo);
-        _repo.SaveChanges();
-
+        _repo.UpdateTask(updatedInfo); // Use repository to update task
         return RedirectToAction("Index");
     }
 
-    //pulls up confirmation page to delete the record
+    // Pulls up confirmation page to delete the record
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var record = _repo.Tasks.Single(x => x.TaskId == id);
+        var record = _repo.GetTaskById(id); // Fetch task by ID
         return View(record);
     }
 
     [HttpPost]
     public IActionResult Delete(Task app)
     {
-        _repo.Tasks.Remove(app);
-        _repo.SaveChanges();
+        _repo.DeleteTask(app); // Use repository to delete task
         return RedirectToAction("Index");
     }
-    
+
     [HttpPost]
     public IActionResult Complete(int id)
     {
