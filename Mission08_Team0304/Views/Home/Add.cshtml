@@ -13,16 +13,19 @@
                         @* Hidden input for task id so it gets automatically assigned *@
                         <input asp-for="TaskId" type="hidden"/>
 
+                        @*Input for the name of the task, required*@
                         <div class="mb-3">
                             <label asp-for="TaskName" class="form-label">Task:</label>
                             <input asp-for="TaskName" class="form-control" placeholder="Enter task name" required/>
                         </div>
 
+                        @*Input for the due date of the task, not required*@
                         <div class="mb-3">
                             <label asp-for="DueDate" class="form-label">Due Date:</label>
                             <input asp-for="DueDate" type="date" class="form-control"/>
                         </div>
 
+                        @*Input for the quadrant of the task, required*@
                         <div class="mb-3">
                             <label asp-for="Quadrant" class="form-label">Quadrant:</label>
                             <select asp-for="Quadrant" class="form-select" required>
@@ -34,7 +37,7 @@
                             </select>
                         </div>
 
-                        @* Dropdown for category options *@
+                        @* Dropdown for category options, not required *@
                         <div class="mb-3">
                             <label asp-for="CategoryId" class="form-label">Category:</label>
                             <select asp-for="CategoryId" class="form-select">

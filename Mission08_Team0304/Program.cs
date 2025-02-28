@@ -11,6 +11,9 @@ builder.Services.AddDbContext<TasksContext>(options =>
     options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 
+//gives each HTTP request will get its own interface implementation
+builder.Services.AddScoped<ITaskRepository, EFTaskRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
