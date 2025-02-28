@@ -16,6 +16,7 @@ public class HomeController : Controller
         _repo = temp;
     }
 
+    //Pulls up quadrant view of tasks (along with categories)
     [HttpGet]
     public IActionResult Index()
     {
@@ -23,7 +24,7 @@ public class HomeController : Controller
         return View(tasks);
     }
 
-    // Adding a task
+    // Loading up the page for adding a task
     [HttpGet]
     public IActionResult Add()
     {
@@ -31,7 +32,7 @@ public class HomeController : Controller
         return View("Add", new Task());
     }
 
-    // Saves valid new task instances to the database
+    // Saves valid new task instances to the database, has the user try again with invalid tasks
     [HttpPost]
     public IActionResult Add(Task response)
     {
@@ -43,7 +44,8 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories = _repo.GetCategories(); // Fetch categories again
+            //have the user try again with the current data
+            ViewBag.Categories = _repo.GetCategories();
             return View("Add", response);
         }
     }
@@ -62,7 +64,7 @@ public class HomeController : Controller
     public IActionResult Edit(Task updatedInfo)
     {
         _repo.UpdateTask(updatedInfo); // Use repository to update task
-        return RedirectToAction("Index");
+        return RedirectToAction("Index"); //redirects to the quadrants view with the newly added task 
     }
 
     // Pulls up confirmation page to delete the record
@@ -73,6 +75,7 @@ public class HomeController : Controller
         return View(record);
     }
 
+    //actually deletes the record once confirmed
     [HttpPost]
     public IActionResult Delete(Task app)
     {
@@ -80,6 +83,8 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    
+    //allows the user to mark a task as completed
     [HttpPost]
     public IActionResult Complete(int id)
     {
