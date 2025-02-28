@@ -83,16 +83,16 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Complete(int id)
     {
-        var recordToComplete =  _repo.Tasks.Find(id);
+        var recordToComplete = _repo.GetTaskById(id); // Fetch task by ID
 
         if (recordToComplete != null)
         {
-            recordToComplete.Completed = true;
-            _repo.Update(recordToComplete);
-            _repo.SaveChanges();
+            recordToComplete.Completed = true; // Mark task as completed
+            _repo.UpdateTask(recordToComplete); // Use repository to update task
         }
 
         return RedirectToAction("Index");
     }
+
 
 }
