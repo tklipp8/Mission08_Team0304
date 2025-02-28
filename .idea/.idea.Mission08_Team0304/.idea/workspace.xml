@@ -9,7 +9,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbb8f877-3fa9-4847-bd24-a9ffe7f80e89" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Mission08_Team0304/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Mission08_Team0304/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mission08_Team0304/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Mission08_Team0304/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/TaskConnection.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Mission08_Team0304/TaskConnection.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/TaskConnection.sqlite-shm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/TaskConnection.sqlite-wal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/Views/Home/Add.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Mission08_Team0304/Views/Home/Add.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/Views/Home/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Mission08_Team0304/Views/Home/Delete.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Mission08_Team0304/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mission08_Team0304/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Mission08_Team0304/Views/Shared/_Layout.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,21 +27,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "mckennabrown0224"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mckennabrown0224&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/tklipp8/Mission08_Team0304.git",
-    "accountId": "7b25a37d-d169-4bc4-9786-7a69cfc0e1ae"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/tklipp8/Mission08_Team0304.git&quot;,
+    &quot;accountId&quot;: &quot;7b25a37d-d169-4bc4-9786-7a69cfc0e1ae&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2taxhUZ0s6gA52RkA5msroSJfQv" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -41,9 +49,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.Mission08_Team0304: http.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "mcmessy",
+    "git-widget-placeholder": "mckenna13",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -93,6 +102,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740604106112</updated>
       <workItem from="1740604107241" duration="1082000" />
+      <workItem from="1740621509949" duration="3705000" />
     </task>
     <servers />
   </component>

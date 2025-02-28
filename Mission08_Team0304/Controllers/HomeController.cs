@@ -8,20 +8,21 @@ namespace Mission08_Team0304.Controllers;
 
 public class HomeController : Controller
 {
-    private TasksContext _context;
+    private ITaskRepository _repo;
 
     //constructor
-    public HomeController(TasksContext taskTemp) 
+    public HomeController(ITaskRepository temp) 
     {
-        _context = taskTemp;
+        _repo = temp;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-
-        var temp = _context.Tasks
-            .Include(x => x.CategoryName).ToList(); //pulls List of tasks
+        var temp = _repo.Tasks
+            .Include(x => x.CategoryName)
+            .Where(x => x.Completed == false) // Only show incomplete tasks
+            .ToList();
         
         return View(temp);
         
@@ -31,7 +32,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Add()
     {
-        ViewBag.Categories = _context.Categories
+        ViewBag.Categories = _repo.Categories
             .OrderBy(x => x.CategoryName)
             .ToList();
         
@@ -45,16 +46,14 @@ public class HomeController : Controller
         if (ModelState.IsValid) 
         {
 
-            _context.Tasks.Add(response); 
-            _context.SaveChanges();
-            var temp = _context.Tasks
-                .Include(x => x.CategoryName).ToList(); //pulls List of tasks
+            _repo.Tasks.Add(response); 
+            _repo.SaveChanges();
 
-            return View("Index", temp);
+            return RedirectToAction("Index");
         }
         else
         {
-            ViewBag.Categories = _context.Categories
+            ViewBag.Categories = _repo.Categories
                 .OrderBy(x => x.CategoryName)
                 .ToList();
             return View("Add", response);
@@ -65,10 +64,10 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var recordToEdit = _context.Tasks
+        var recordToEdit = _repo.Tasks
             .Single(x => x.TaskId == id);
             
-        ViewBag.Categories = _context.Categories
+        ViewBag.Categories = _repo.Categories
             .OrderBy(x => x.CategoryName)
             .ToList();
         
@@ -79,8 +78,8 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Edit(Task updatedInfo)
     {
-        _context.Update(updatedInfo);
-        _context.SaveChanges();
+        _repo.Update(updatedInfo);
+        _repo.SaveChanges();
 
         return RedirectToAction("Index");
     }
@@ -89,15 +88,31 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var record = _context.Tasks.Single(x => x.TaskId == id);
+        var record = _repo.Tasks.Single(x => x.TaskId == id);
         return View(record);
     }
 
     [HttpPost]
     public IActionResult Delete(Task app)
     {
-        _context.Tasks.Remove(app);
-        _context.SaveChanges();
+        _repo.Tasks.Remove(app);
+        _repo.SaveChanges();
         return RedirectToAction("Index");
     }
+    
+    [HttpPost]
+    public IActionResult Complete(int id)
+    {
+        var recordToComplete =  _repo.Tasks.Find(id);
+
+        if (recordToComplete != null)
+        {
+            recordToComplete.Completed = true;
+            _repo.Update(recordToComplete);
+            _repo.SaveChanges();
+        }
+
+        return RedirectToAction("Index");
+    }
+
 }

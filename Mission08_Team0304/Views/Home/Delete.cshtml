@@ -5,11 +5,25 @@
 
 @model Mission08_Team0304.Models.Task
 
-<h2>Confirm Delete</h2>
-<p>Are you sure you want to delete <strong>@Model.TaskName</strong>?</p>
+@*page to confirm deletion*@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0 text-center">Confirm Delete</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">Are you sure you want to delete <strong>@Model.TaskName</strong>?</p>
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="TaskId" />
-    <button type="submit" class="btn btn-danger">Confirm Delete</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+                    @*actually deletes item when confirmed*@
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="TaskId" />
+                        <button type="submit" class="btn btn-danger btn-lg px-4">🗑 Confirm Delete</button>
+                        <a asp-action="Index" class="btn btn-secondary btn-lg px-4">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
